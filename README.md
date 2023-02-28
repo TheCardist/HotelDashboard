@@ -1,0 +1,2 @@
+# HotelDashboard
+Hotel settings dashboard
