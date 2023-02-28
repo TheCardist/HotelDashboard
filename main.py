@@ -19,7 +19,7 @@ service = keyring.get_password('oracle', 'service')
 
 
 def validate_vpn():
-    '''Validate whether or not the user is connect to VPN. If not, display message and exit program.'''
+    """Validate whether or not the user is connect to VPN. If not, display message and exit program. Required to be connected for Oracle access"""
 
     addresses = os.popen(
         'IPCONFIG | FINDSTR /R "Ethernet adapter Local Area Connection .* Address.*[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*"')
@@ -42,8 +42,8 @@ def validate_vpn():
         raise ValueError('VPN is Not Connected')
 
 
-def get_queries():
-  """Run the 10 needed queries to develop the dashboard"""
+def get_queries() -> pl.DataFrame:
+  """Run the 10 needed queries to develop the dashboard, compile to a list which also has the row and column settings. This is written to a Polars Dataframe"""
   
     cx_Oracle.init_oracle_client(
         lib_dir=r"path/to/instantclient_21_9")
@@ -98,8 +98,8 @@ def write_to_excel(data):
         for name, value in data.items():
             df, row, col = value
             df = data[name]
-            polars_df = df[0]
-            df = polars_df.to_pandas()
+            polars_df = df[0] 
+            df = polars_df.to_pandas() # Convert polars.df to pandas.df
             df.to_excel(writer, index=False, header=False,
                         sheet_name="Sheet1", startcol=col, startrow=row)
 
