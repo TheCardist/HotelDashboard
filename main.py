@@ -76,9 +76,9 @@ def get_queries() -> pl.DataFrame:
     dict_df = {}
 
     for index, my_list in enumerate(all_queries):
+        print(f"Extracting data from {my_list[3]}.")
         dict_df[f'df{index}'] = (pl.read_sql(
             my_list[0], conn), my_list[1], my_list[2])
-        print(f"Extracting data from {my_list[3]}.")
 
     return dict_df
 
